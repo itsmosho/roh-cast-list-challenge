@@ -4,6 +4,10 @@ import React, { useEffect, useState } from 'react';
 function App() {
 
   const [data, setData] = useState({});
+  const [title, setTitle] = useState("");
+  const [setShortDescription, setShortDescription] = useState("");
+  const [setCreatives, setCreatives] = useState([]);
+  const [setCast, setCast] = useState([]);
 
   useEffect(() => {
     async function fetchData() {
@@ -12,6 +16,7 @@ function App() {
         if (response.status === 200) {
           const json = await response.json();
           setData(json);
+          console.log(json);
         } else {
           console.log('Error: ' + response.status);
         }
@@ -25,7 +30,9 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{data}</h1>
+      <h1>{data.data.attributes.title}</h1>
+      <p>Date: 10/3/2023</p>
+
     </div>
   );
 }
