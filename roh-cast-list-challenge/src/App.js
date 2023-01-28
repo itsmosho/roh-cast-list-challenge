@@ -1,23 +1,31 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useEffect, useState } from 'react';
 
 function App() {
+
+  const [data, setData] = useState({});
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("https://www.roh.org.uk/api/event-details?slug=turandot-by-andrei-serban");
+        if (response.status === 200) {
+          const json = await response.json();
+          setData(json);
+        } else {
+          console.log('Error: ' + response.status);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>{data}</h1>
     </div>
   );
 }
