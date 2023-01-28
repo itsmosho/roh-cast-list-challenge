@@ -5,9 +5,10 @@ function App() {
 
   const [data, setData] = useState({});
   const [title, setTitle] = useState("");
-  const [setShortDescription, setShortDescription] = useState("");
-  const [setCreatives, setCreatives] = useState([]);
-  const [setCast, setCast] = useState([]);
+  const [shortDescription, setShortDescription] = useState("");
+  const [creatives, setCreatives] = useState([]);
+  const [cast, setCast] = useState([]);
+  const [date, setDate] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -17,6 +18,12 @@ function App() {
           const json = await response.json();
           setData(json);
           console.log(json);
+          setTitle(json.data.attributes.title);
+          setShortDescription(json.data.attributes.shortDescription);
+          setCreatives(getCreatives(json));
+          setCast(json.data.cast);
+          // to return the date of the event
+          setDate(json.included[14].attributes.date);
         } else {
           console.log('Error: ' + response.status);
         }
@@ -28,10 +35,25 @@ function App() {
   }, []);
 
 
+  const getCreatives = (data) => {
+    const creatives = [];
+    data.data.included.forEach(relationship => {
+      if (relationship.type === "creatives") {
+        creatives.push(relationship.attributes.name);
+      }
+    });
+    return creatives;
+  }
+
+
+
   return (
     <div className="App">
-      <h1>{data.data.attributes.title}</h1>
-      <p>Date: 10/3/2023</p>
+      <h1>{title}</h1>
+      <p>Date: {date}</p>
+      <p>{shortDescription}</p>
+      <h2>Creatives</h2>
+      <ul>{creatives}</ul>
 
     </div>
   );
