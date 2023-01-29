@@ -23,7 +23,7 @@ function App() {
           setCreatives(getCreatives(json));
           setCast(getCast(json));
           // to return the date of the event
-          setDate(json.included[14].attributes.date);
+          setDate(formatDate(json.included[14].attributes.date));
         } else {
           console.log('Error: ' + response.status);
         }
@@ -55,6 +55,9 @@ function App() {
     return cast;
   }
 
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString();
+  }
 
   return (
     <div className="App">
