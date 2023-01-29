@@ -1,3 +1,10 @@
+- Clone the repository
+- cd into roh-cast-list-challenge
+- run `npm install`
+- run `npm start`
+- The application should run automatically in the browser. If not, then go to `http://localhost:3000/`
+
+
 # Cast List Challenge
 
 Dev challenge to build a tool for the ROH
