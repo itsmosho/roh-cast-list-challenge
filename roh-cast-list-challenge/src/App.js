@@ -37,9 +37,9 @@ function App() {
 
   const getCreatives = (data) => {
     const creatives = [];
-    data.data.included.forEach(relationship => {
+    data.included.forEach(relationship => {
       if (relationship.type === "creatives") {
-        creatives.push(relationship.attributes.name);
+        creatives.push(relationship.attributes);
       }
     });
     return creatives;
@@ -53,8 +53,11 @@ function App() {
       <p>Date: {date}</p>
       <p>{shortDescription}</p>
       <h2>Creatives</h2>
-      <ul>{creatives}</ul>
-
+      {
+        creatives.map((creative) => (
+        <li key={creative.id}>{creative.name} ({creative.role})</li>
+        ))
+      }
     </div>
   );
 }
