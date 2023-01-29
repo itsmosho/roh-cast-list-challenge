@@ -21,7 +21,7 @@ function App() {
           setTitle(json.data.attributes.title);
           setShortDescription(json.data.attributes.shortDescription);
           setCreatives(getCreatives(json));
-          setCast(json.data.cast);
+          setCast(getCast(json));
           // to return the date of the event
           setDate(json.included[14].attributes.date);
         } else {
@@ -45,6 +45,15 @@ function App() {
     return creatives;
   }
 
+  const getCast = (data) => {
+    const cast = [];
+    data.included.forEach(relationship => {
+      if (relationship.type === "castRoles") {
+        cast.push(relationship.attributes);
+      }
+    });
+    return cast;
+  }
 
 
   return (
@@ -56,6 +65,12 @@ function App() {
       {
         creatives.map((creative) => (
         <li key={creative.id}>{creative.name} ({creative.role})</li>
+        ))
+      }
+      <h2>Cast</h2>
+      {
+        cast.map((cast) => (
+          <li key={cast.id}>{cast.name} ({cast.role})</li>
         ))
       }
     </div>
