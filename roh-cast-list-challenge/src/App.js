@@ -19,7 +19,7 @@ function App() {
           setData(json);
           console.log(json);
           setTitle(json.data.attributes.title);
-          setShortDescription(json.data.attributes.shortDescription);
+          setShortDescription(removeTags(json.data.attributes.shortDescription));
           setCreatives(getCreatives(json));
           setCast(getCast(json));
           // to return the date of the event
@@ -53,6 +53,10 @@ function App() {
       }
     });
     return cast;
+  }
+
+  const removeTags = (str) => {
+    return str.slice(3,-4)
   }
 
   const formatDate = (date) => {
